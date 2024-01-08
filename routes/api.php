@@ -19,4 +19,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/posts', [PostController::class, 'index'])->middleware(['auth:sanctum']);
 Route::get('/posts/{id}', [PostController::class, 'show'])->middleware(['auth:sanctum']);
 Route::get('/posts_detail/{id}', [PostController::class, 'show_detail']);
-Route::get('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login']);
