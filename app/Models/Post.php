@@ -10,4 +10,9 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'news_content', 'author'];
+
+    public function writer()
+    {
+        return $this->belongsTo(User::class, 'author', 'id');
+    }
 }
