@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\PostController;
@@ -17,10 +18,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/posts', [PostController::class, 'index'])->middleware(['auth:sanctum']);
-Route::get('/posts/{id}', [PostController::class, 'show'])->middleware(['auth:sanctum']);
-Route::get('/posts_detail/{id}', [PostController::class, 'show_detail']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/user_details', [AuthController::class, 'details']);
+});
 
-Route::post('/login', [LoginController::class, 'login']);
-Route::get('/logout', [LogoutController::class,  'logout'])->middleware(['auth:sanctum']);
-Route::get('/user_details', [LoginController::class, 'details'])->middleware(['auth:sanctum']);
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{id}', [PostController::class, 'show']);
+Route::get('/posts_detail/{id}', [PostController::class, 'show_detail']);
+Route::post('/posts', [PostController::class, 'create_post']);
+
+Route::post('/login', [AuthController::class, 'login']);
